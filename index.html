@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cars24 vs Spinny — The Sell Journey</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1a1a;
+    --ink-muted: #5a5a5a;
+    --ink-faint: #9a9a9a;
+    --surface: #ffffff;
+    --surface-soft: #f7f6f3;
+    --surface-mid: #f0ede8;
+    --border: #e4e0d8;
+    --border-strong: #c8c4bc;
+    --c24-bg: #eaf3de;
+    --c24-text: #2d5a0e;
+    --c24-border: #a8cc7c;
+    --spinny-bg: #eeedfe;
+    --spinny-text: #3c3489;
+    --spinny-border: #b0a8f0;
+    --warn-bg: #fdf0e8;
+    --warn-text: #8a4010;
+    --serif: 'Georgia', 'Times New Roman', serif;
+    --sans: -apple-system, 'Segoe UI', system-ui, sans-serif;
+    --mono: 'SF Mono', 'Consolas', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--ink);
+    background: var(--surface);
+    display: flex;
+    min-height: 100vh;
+  }
+
+  /* ---- SIDEBAR ---- */
+  .sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    padding: 3rem 1.25rem 3rem 2rem;
+    border-right: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--surface-soft);
+  }
+
+  .sidebar-brand {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-doc-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.4;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-group-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin: 20px 0 6px;
+  }
+
+  .nav-link {
+    display: block;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    text-decoration: none;
+    padding: 3px 0 3px 10px;
+    border-left: 2px solid transparent;
+    line-height: 1.4;
+    transition: all 0.12s;
+    margin-bottom: 1px;
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+    border-left-color: var(--border-strong);
+  }
+
+  .nav-link.active {
+    color: var(--ink);
+    border-left-color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ---- CONTENT ---- */
+  .content {
+    flex: 1;
+    padding: 4rem 4rem 6rem 4rem;
+    max-width: 760px;
+  }
+
+  /* ---- COVER ---- */
+  .cover {
+    margin-bottom: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .cover-eyebrow {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  .cover-title {
+    font-family: var(--serif);
+    font-size: 38px;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 18px;
+    font-weight: normal;
+  }
+
+  .cover-title em {
+    font-style: italic;
+  }
+
+  .cover-sub {
+    font-size: 16px;
+    color: var(--ink-muted);
+    line-height: 1.65;
+    max-width: 580px;
+    margin-bottom: 24px;
+  }
+
+  .cover-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .chip {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+  }
+
+  .chip-c24 { background: var(--c24-bg); color: var(--c24-text); }
+  .chip-spinny { background: var(--spinny-bg); color: var(--spinny-text); }
+  .chip-neutral { background: var(--surface-mid); color: var(--ink-muted); }
+
+  .cover-meta {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+  }
+
+  .meta-group strong {
+    display: block;
+    font-weight: 500;
+    color: var(--ink-muted);
+    margin-bottom: 1px;
+  }
+
+  /* ---- SECTION ---- */
+  .section {
+    margin-bottom: 4rem;
+    scroll-margin-top: 2rem;
+  }
+
+  .section-label {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.25;
+    color: var(--ink);
+    font-weight: normal;
+    margin-bottom: 22px;
+  }
+
+  /* ---- PROSE ---- */
+  .prose p {
+    margin-bottom: 1.1rem;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--ink);
+  }
+
+  .prose p:last-child { margin-bottom: 0; }
+
+  sup {
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    vertical-align: super;
+    line-height: 0;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* ---- STAT BLOCKS ---- */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin: 1.75rem 0;
+  }
+
+  .stat-card {
+    padding: 1rem 1.1rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .stat-card.c24 { border-color: var(--c24-border); background: var(--c24-bg); }
+  .stat-card.spinny { border-color: var(--spinny-border); background: var(--spinny-bg); }
+  .stat-card.neutral { background: var(--surface-soft); }
+
+  .stat-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .stat-card.c24 .stat-label { color: var(--c24-text); }
+  .stat-card.spinny .stat-label { color: var(--spinny-text); }
+  .stat-card.neutral .stat-label { color: var(--ink-faint); }
+
+  .stat-value {
+    font-family: var(--serif);
+    font-size: 26px;
+    line-height: 1.1;
+    margin-bottom: 3px;
+  }
+
+  .stat-card.c24 .stat-value { color: var(--c24-text); }
+  .stat-card.spinny .stat-value { color: var(--spinny-text); }
+  .stat-card.neutral .stat-value { color: var(--ink); }
+
+  .stat-note {
+    font-size: 11.5px;
+    line-height: 1.45;
+  }
+
+  .stat-card.c24 .stat-note { color: #4a7d1e; }
+  .stat-card.spinny .stat-note { color: #534AB7; }
+  .stat-card.neutral .stat-note { color: var(--ink-muted); }
+
+  /* ---- CALLOUT ---- */
+  .callout {
+    border-left: 3px solid var(--border-strong);
+    padding: 1rem 1.25rem;
+    margin: 1.75rem 0;
+    background: var(--surface-soft);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .callout.warn { border-left-color: #c0763a; background: var(--warn-bg); }
+
+  .callout-head {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+  }
+
+  .callout.warn .callout-head { color: var(--warn-text); }
+
+  .callout-stat {
+    font-family: var(--serif);
+    font-size: 30px;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .callout.warn .callout-stat { color: var(--warn-text); }
+
+  .callout-body {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .callout.warn .callout-body { color: #7a4820; }
+
+  /* ---- PULL QUOTE ---- */
+  .pull {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.55;
+    color: var(--ink-muted);
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 0;
+    margin: 2rem 0;
+  }
+
+  /* ---- JOURNEY TABLE ---- */
+  .journey-wrap {
+    margin: 1.75rem 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 13px;
+  }
+
+  .journey-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .journey-head-cell {
+    padding: 10px 16px;
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .journey-head-cell.c24 { background: var(--c24-bg); color: var(--c24-text); }
+  .journey-head-cell.spinny { background: var(--spinny-bg); color: var(--spinny-text); border-left: 1px solid var(--border); }
+
+  .journey-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--border);
+  }
+
+  .journey-cell {
+    padding: 11px 16px;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    font-size: 13px;
+  }
+
+  .journey-cell:last-child { border-left: 1px solid var(--border); }
+
+  .journey-cell.good { background: var(--c24-bg); }
+  .journey-cell.bad { background: var(--warn-bg); }
+  .journey-cell.neutral { background: var(--surface-soft); }
+
+  .step-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    color: var(--ink-faint);
+    margin-bottom: 2px;
+  }
+
+  .step-text {
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .step-note {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin-top: 2px;
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  /* ---- FRICTION BLOCKS ---- */
+  .friction-item {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 0 20px;
+    margin-bottom: 2.75rem;
+    padding-bottom: 2.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .friction-item:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .friction-num {
+    font-family: var(--serif);
+    font-size: 52px;
+    color: var(--border-strong);
+    line-height: 1;
+    font-weight: normal;
+    padding-top: 4px;
+    text-align: right;
+  }
+
+  .friction-body {}
+
+  .friction-title {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 12px;
+    font-weight: normal;
+  }
+
+  .friction-prose p {
+    font-size: 14.5px;
+    line-height: 1.8;
+    color: var(--ink);
+    margin-bottom: 0.9rem;
+  }
+
+  .friction-prose p:last-child { margin-bottom: 0; }
+
+  /* ---- AI BLOCKS ---- */
+  .ai-block {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.25rem 1.4rem;
+    margin-bottom: 1.25rem;
+    background: var(--surface);
+  }
+
+  .ai-block:last-child { margin-bottom: 0; }
+
+  .ai-eyebrow {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 700;
+    color: var(--ink-faint);
+    margin-bottom: 5px;
+  }
+
+  .ai-name {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  .ai-desc {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+
+  .ai-connection {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+    border-top: 1px solid var(--border);
+    padding-top: 7px;
+  }
+
+  /* ---- DIVIDER ---- */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2.5rem 0;
+  }
+
+  /* ---- SOURCES ---- */
+  .sources-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .source-row {
+    display: flex;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12.5px;
+  }
+
+  .source-row:last-child { border-bottom: none; }
+
+  .source-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    min-width: 22px;
+    padding-top: 2px;
+    letter-spacing: 0.05em;
+  }
+
+  .source-text { color: var(--ink-muted); line-height: 1.5; }
+  .source-text a { color: var(--ink-muted); text-decoration: underline; }
+  .source-text strong { font-weight: 600; color: var(--ink); }
+
+  /* ---- MODEL CONTRAST ---- */
+  .model-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 1.75rem 0;
+  }
+
+  .model-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .model-card-head {
+    padding: 10px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .model-card-head.c24 { background: var(--c24-bg); color: var(--c24-text); }
+  .model-card-head.spinny { background: var(--spinny-bg); color: var(--spinny-text); }
+
+  .model-card-body {
+    padding: 12px 14px;
+  }
+
+  .model-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
+    padding: 7px 0;
+    font-size: 13px;
+  }
+
+  .model-row:last-child { border-bottom: none; }
+  .model-key { color: var(--ink-faint); font-size: 12px; }
+  .model-val { font-weight: 500; color: var(--ink); font-size: 13px; }
+
+  /* ---- OBSERVATION TAG ---- */
+  .obs-tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 4px;
+  }
+
+  .obs-tag.first-hand { background: #fff3cd; color: #856404; }
+  .obs-tag.research { background: var(--surface-mid); color: var(--ink-faint); }
+
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">Assignment · Sell Journey</div>
+  <div class="sidebar-doc-title">Cars24 vs Spinny<br>A Sell-Side Analysis</div>
+
+  <div class="nav-group-label">Contents</div>
+  <a href="#section-stakes" class="nav-link">The stakes</a>
+  <a href="#section-businesses" class="nav-link">Two different bets</a>
+  <a href="#section-journey" class="nav-link">The journey mapped</a>
+  <a href="#section-friction" class="nav-link">Five friction points</a>
+  <a href="#section-ai" class="nav-link">Where AI closes the gap</a>
+  <a href="#section-conclusion" class="nav-link">Conclusion</a>
+  <a href="#section-sources" class="nav-link">Sources</a>
+
+  <div style="margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border);">
+    <div style="font-size: 11px; color: var(--ink-faint); line-height: 1.6;">
+      Based on first-hand walkthroughs of both apps.<br><br>
+      Same car tested: 2024 Tata Nexon<br>UP78 HS3132<br>April 27, 2026
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="content">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-eyebrow">Competitive Analysis · India Used Cars · Sell Journey</div>
+    <h1 class="cover-title">Cars24 vs Spinny<br><em>On the Sell Side</em></h1>
+    <p class="cover-sub">Both platforms want the same seller, making the same decision, at the same anxious moment. This is a first-hand comparison of how each platform handles that moment, where trust breaks down, and what AI can do about it.</p>
+    <div class="cover-chips">
+      <span class="chip chip-c24">Cars24</span>
+      <span class="chip chip-spinny">Spinny</span>
+      <span class="chip chip-neutral">Sell Journey</span>
+      <span class="chip chip-neutral">AI Strategy</span>
+    </div>
+    <div class="cover-meta">
+      <div class="meta-group"><strong>Vehicle tested</strong>2024 Tata Nexon · UP78 HS3132</div>
+      <div class="meta-group"><strong>Date</strong>April 27, 2026</div>
+      <div class="meta-group"><strong>Method</strong>Full app walkthrough, both platforms</div>
+    </div>
+  </div>
+
+
+  <!-- SECTION 1: THE STAKES -->
+  <section class="section" id="section-stakes">
+    <div class="section-label">01 — Context</div>
+    <h2 class="section-title">The stakes are higher than they look</h2>
+    <div class="prose">
+      <p>India's used car market handled roughly five million transactions in FY25, growing faster than new car sales for the third year running. In that market, two digital platforms have moved from niche experiments to genuine scale: Cars24, which built India's first online dealer-auction model starting in 2015, and Spinny, which bet on a vertically integrated C2B2C retail play a few years later. Both want to be the platform a seller trusts when they decide to move on from their car.</p>
+
+      <p>The "Sell" journey is where that trust is earned or lost in minutes. A seller arrives with a specific kind of anxiety: they have no reliable idea what their car is worth, they assume dealers will cheat them, and they have likely heard a story from someone who felt robbed by the process. The platform that dissolves the most uncertainty at the right moments wins. The one that creates new uncertainty loses the appointment, the deal, or the customer's goodwill permanently.</p>
+
+      <p>This analysis walks both journeys on the same day using the same vehicle, identifies where friction accumulates, and argues for specific AI interventions that would close the gap. The framework is not "who has the better app" but rather "who is losing sellers unnecessarily, and where."</p>
+    </div>
+  </section>
+
+
+  <!-- SECTION 2: TWO BETS -->
+  <section class="section" id="section-businesses">
+    <div class="section-label">02 — Business Models</div>
+    <h2 class="section-title">Two different bets on the same market</h2>
+
+    <div class="prose">
+      <p>The financial trajectories tell the structural story before anything else. Cars24 closed FY25 with revenue of ₹6,233 crore, down 10% year on year, with losses widening slightly to ₹543 crore.<sup>[1]</sup> Spinny posted ₹4,657 crore in FY25 revenue, up 25%, with losses cut by 28% to ₹423 crore.<sup>[2]</sup> Cars24 is larger but shrinking. Spinny is smaller but accelerating. Those diverging lines reflect choices made years ago about what kind of company each wants to be.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card c24">
+        <div class="stat-label">Cars24 FY25</div>
+        <div class="stat-value">₹6,233 Cr</div>
+        <div class="stat-note">Revenue, −10% YoY · Loss ₹543 Cr</div>
+      </div>
+      <div class="stat-card spinny">
+        <div class="stat-label">Spinny FY25</div>
+        <div class="stat-value">₹4,657 Cr</div>
+        <div class="stat-note">Revenue, +25% YoY · Loss ₹423 Cr (−28%)</div>
+      </div>
+      <div class="stat-card neutral">
+        <div class="stat-label">The gap</div>
+        <div class="stat-value">35%</div>
+        <div class="stat-note">Revenue spread shrinking with each year</div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>Cars24 is an asset-light auction marketplace. It does not own the cars it buys. A seller gets an indicative price from Cars24's Profecto pricing model, an XGBoost system trained on approximately one million inspections, nine million auction events, and 750,000 transacted cars.<sup>[3]</sup> After inspection, a live 30-minute online auction runs among 20,000-plus verified dealers, and the highest bid becomes the final offer valid for 24 hours. Cars24 earns a spread on the transaction, financing income through its Loans24 NBFC arm, and a growing base of paid add-ons including Seller Kavach (post-sale liability cover) and Pan-India Pro listing plans priced at ₹588 to ₹1,298.</p>
+
+      <p>Spinny runs the opposite bet. It buys as a principal through its SellRight program: an algorithm called the Star Engine sets a price, and that price is contractually guaranteed to land within ±5% of the online estimate after physical inspection.<sup>[9]</sup> Spinny then refurbishes the car under its Assured quality standard and resells it direct to consumers, capturing the retail margin. Cars that don't meet Spinny's criteria are declined or routed to its Truebil subsidiary. The seller gets certainty. Spinny absorbs the inventory risk and captures the upside.</p>
+    </div>
+
+    <div class="model-compare">
+      <div class="model-card">
+        <div class="model-card-head c24">Cars24 — Auction Model</div>
+        <div class="model-card-body">
+          <div class="model-row"><span class="model-key">Price set by</span><span class="model-val">Dealer auction</span></div>
+          <div class="model-row"><span class="model-key">Offer validity</span><span class="model-val">24 hours</span></div>
+          <div class="model-row"><span class="model-key">Price gap risk</span><span class="model-val">Open (5–30%+)</span></div>
+          <div class="model-row"><span class="model-key">Car ownership</span><span class="model-val">Never holds stock</span></div>
+          <div class="model-row"><span class="model-key">Revenue levers</span><span class="model-val">Spread, NBFC, add-ons</span></div>
+          <div class="model-row"><span class="model-key">Inspection time</span><span class="model-val">~30–45 mins</span></div>
+        </div>
+      </div>
+      <div class="model-card">
+        <div class="model-card-head spinny">Spinny — Principal Buyer</div>
+        <div class="model-card-body">
+          <div class="model-row"><span class="model-key">Price set by</span><span class="model-val">Star Engine algorithm</span></div>
+          <div class="model-row"><span class="model-key">Offer validity</span><span class="model-val">72 hours</span></div>
+          <div class="model-row"><span class="model-key">Price gap risk</span><span class="model-val">Capped at ±5%</span></div>
+          <div class="model-row"><span class="model-key">Car ownership</span><span class="model-val">Buys and refurbishes</span></div>
+          <div class="model-row"><span class="model-key">Revenue levers</span><span class="model-val">Retail margin, Truebil</span></div>
+          <div class="model-row"><span class="model-key">Inspection time</span><span class="model-val">45–60 mins</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose">
+      <p>The critical implication for sellers is this: Cars24's Profecto model generates the online estimate, but it does not bind the final price. Dealers do. Spinny's Star Engine generates the estimate and it does bind the final price, within 5%. This architectural difference explains nearly every friction point that follows.</p>
+    </div>
+  </section>
+
+
+  <!-- SECTION 3: THE JOURNEY -->
+  <section class="section" id="section-journey">
+    <div class="section-label">03 — First-Hand Walkthrough</div>
+    <h2 class="section-title">The journey, step by step</h2>
+
+    <div class="prose">
+      <p><span class="obs-tag first-hand">First-hand</span> Both apps were walked through on April 27, 2026 using the same vehicle: a 2024 Tata Nexon (Creative Plus 1.5 Revotorq 6MT Dark Edition, Diesel, RTO UP-78, plate UP78 HS3132). What follows is not a reconstruction from documentation. It is what actually happened.</p>
+    </div>
+
+    <div class="journey-wrap">
+      <div class="journey-head">
+        <div class="journey-head-cell c24">Cars24</div>
+        <div class="journey-head-cell spinny">Spinny (SellRight)</div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell good">
+          <div class="step-label">Step 1</div>
+          <div class="step-text">Enter plate number</div>
+          <div class="step-note">Plate auto-suggests from past sessions. Smart.</div>
+        </div>
+        <div class="journey-cell bad">
+          <div class="step-label">Step 1</div>
+          <div class="step-text">Enter registration number</div>
+          <div class="step-note">Auto-fetch fails silently. Falls back to manual flow.</div>
+        </div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell good">
+          <div class="step-label">Step 2</div>
+          <div class="step-text">Confirm auto-fetched details</div>
+          <div class="step-note">Brand, model, year, variant, fuel all pre-filled. One tap to confirm.</div>
+        </div>
+        <div class="journey-cell bad">
+          <div class="step-label">Steps 1–8 of 8</div>
+          <div class="step-text">Manual data entry across 8 screens</div>
+          <div class="step-note">Brand → City → Year → Model → Variant (fuel + transmission + trim) → Ownership history → KMs driven → Sell timeline</div>
+        </div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell">
+          <div class="step-label">Step 3</div>
+          <div class="step-text">Select KMs driven</div>
+          <div class="step-note">14 bucket ranges. Single screen, done.</div>
+        </div>
+        <div class="journey-cell good">
+          <div class="step-label">Step 8 of 8 (unique)</div>
+          <div class="step-text">"When are you planning to sell?"</div>
+          <div class="step-note">Immediately / Within a month / After a month / Just checking. Intent capture that Cars24 misses entirely.</div>
+        </div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell good">
+          <div class="step-label">Step 4 — Price shown</div>
+          <div class="step-text">₹8.77L – ₹9.53L</div>
+          <div class="step-note">Based on 54,900 similar transactions. Shown in ~3 minutes from start.</div>
+        </div>
+        <div class="journey-cell bad">
+          <div class="step-label">Price shown — same car</div>
+          <div class="step-text">₹6.50L – ₹8.04L</div>
+          <div class="step-note">Same vehicle, same day. ₹1.5–2L below Cars24. No explanation offered. (See Friction Point 1.)</div>
+        </div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell good">
+          <div class="step-label">Step 5 — Scheduling</div>
+          <div class="step-text">Same-day slots available</div>
+          <div class="step-note">Pick from saved addresses. Hourly slots starting from today 12 PM. Expert assigned 30 mins before.</div>
+        </div>
+        <div class="journey-cell">
+          <div class="step-label">Scheduling</div>
+          <div class="step-text">Earliest slot: tomorrow</div>
+          <div class="step-note">Spinny Hub (drive-in, 4.4 km) or home visit. 90-minute windows. Evaluation takes 45–60 mins.</div>
+        </div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell">
+          <div class="step-label">Post-booking</div>
+          <div class="step-text">3-stage tracker + doc upload</div>
+          <div class="step-note">Inspection → Deal Closure → Pickup. RC and insurance upload nudge. Booster add-on upsell (feels premature).</div>
+        </div>
+        <div class="journey-cell good">
+          <div class="step-label">Post-booking</div>
+          <div class="step-text">Clean 3-stage tracker</div>
+          <div class="step-note">Requested → Scheduled → Completed. WhatsApp and call icons persistent. No premature upsells.</div>
+        </div>
+      </div>
+
+      <div class="journey-row">
+        <div class="journey-cell">
+          <div class="step-label">Cancellation</div>
+          <div class="step-text">4 generic reason options</div>
+          <div class="step-note">"I don't want to sell / Sold elsewhere / Not available / My reason not listed." Treated as churn, not signal.</div>
+        </div>
+        <div class="journey-cell good">
+          <div class="step-label">Cancellation (unique)</div>
+          <div class="step-text">8 granular reasons + save layer</div>
+          <div class="step-note">"Getting better price elsewhere / Offered price not attractive / Inspector did not arrive." Then: "Get a Call Back" before confirming. Smart retention.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-head">Time to price estimate</div>
+      <div class="callout-stat">~3 min vs ~10 min</div>
+      <div class="callout-body">Cars24's plate auto-fetch collapses the pre-price journey to three screens. Spinny's failed auto-fetch forced eight manual screens for the same car. Both users arrived at a price. Only one of them had a good time getting there.</div>
+    </div>
+  </section>
+
+
+  <!-- SECTION 4: FRICTION POINTS -->
+  <section class="section" id="section-friction">
+    <div class="section-label">04 — Friction Analysis</div>
+    <h2 class="section-title">Five places where sellers disappear</h2>
+
+    <div class="prose">
+      <p>The sell funnel has four natural drop-off points: after the online estimate, after the inspection booking, after the actual inspection, and after the price offer. Each one represents real revenue lost. What follows is an analysis of where that loss is happening and why.</p>
+    </div>
+
+    <!-- FRICTION 1 -->
+    <div class="friction-item">
+      <div class="friction-num">01</div>
+      <div class="friction-body">
+        <h3 class="friction-title">The price gap that nobody explains</h3>
+        <div class="friction-prose">
+          <p><span class="obs-tag first-hand">First-hand</span> The same 2024 Tata Nexon, on the same day, received an estimate of ₹8.77L–₹9.53L from Cars24 and ₹6.50L–₹8.04L from Spinny. The midpoint gap is approximately ₹1.5 to ₹2 lakh. Neither platform offers any explanation for how it arrived at its number.</p>
+
+          <p>This matters for two reasons. First, a seller who checks both platforms in the same session (which is extremely common) sees two wildly different numbers and has no basis for trusting either. Second, Spinny's lower estimate likely reflects the difference between a principal buyer's fixed-margin model and Cars24's auction-driven upside potential. A 2020 Ford EcoSport AT cross-quoted across both platforms in a TeamBHP comparison showed Spinny ₹8.75L versus Cars24 ₹8.1L, a reversal of the pattern seen here.<sup>[10]</sup> The direction of the gap is car-dependent; the absence of explanation is universal.</p>
+
+          <p>Cars24's Profecto model reportedly achieves 50% of predictions within ±5% of final transaction price and 80% within ±10%.<sup>[3]</sup> That accuracy is real, but it produces a range of ₹76,000 on a ₹9 lakh car. The model knows which features drive variance. Showing that reasoning to the seller is a solvable problem that neither company has solved.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRICTION 2 -->
+    <div class="friction-item">
+      <div class="friction-num">02</div>
+      <div class="friction-body">
+        <h3 class="friction-title">Sixty percent never book an inspection</h3>
+        <div class="friction-prose">
+          <p>A Cars24 product design case study published internally cited that on direct and brand channels, only 43% of users who reach the price estimate page convert to a booked inspection appointment.<sup>[6]</sup> The remaining 57% leave. The study attributed the drop to two causes: a perceived gap between the quoted price and what sellers expect to receive after inspection, and a lack of any explanation for how the number was calculated.</p>
+
+          <p>This is entirely a trust problem, not a UX problem. The button to book is prominent. The offer is free. The inspector comes to your house. And yet more than half of the people who took the time to enter their plate number and see a price walk away without booking. They are not confused by the interface. They are not confident in the number.</p>
+
+          <p>Spinny's intent question ("When are you planning to sell?") is the only design element on either platform that acknowledges sellers are not a homogeneous group. A seller who says "just checking price" should receive a different next experience than one who says "immediately." Cars24 treats both identically and loses the browser entirely, when a softer nurture path might convert them in 30 days.</p>
+        </div>
+
+        <div class="callout warn">
+          <div class="callout-head">Funnel reality</div>
+          <div class="callout-stat">57–60%</div>
+          <div class="callout-body">of users who see the online estimate never book an inspection. Per Cars24 internal product research cited in a published design case study.<sup>[6]</sup></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRICTION 3 -->
+    <div class="friction-item">
+      <div class="friction-num">03</div>
+      <div class="friction-body">
+        <h3 class="friction-title">The inspection anxiety window</h3>
+        <div class="friction-prose">
+          <p>Cars24 tells the seller that a car expert will be assigned 30 minutes before the inspection start time. This is meant to feel efficient. It actually creates a 30-minute window of maximum anxiety: the seller is home, they have readied the car, they do not know who is coming, and they have no ability to confirm or track. Multiple forum threads document inspectors arriving late, cancelling with no notice, or failing to show at all.<sup>[7][10]</sup></p>
+
+          <p>The inspection-to-deal conversion rate at comparable C2B platforms has been measured as low as 10%, per JM Financial's analysis of the OLX Autos portfolio before CarTrade shut it down in late 2023.<sup>[7]</sup> Cars24 and Spinny likely outperform that benchmark given stronger brand recognition, but the documented pattern of price-disappointment at inspection ("the app said ₹8L, inspector offered ₹5.5L") suggests the conversion gap is real and large.</p>
+
+          <p>Spinny handles this better with two structural choices. First, the Spinny Hub option means a seller can drive in and receive a more thorough inspection in a controlled environment rather than a parking lot. Second, Spinny communicates evaluation timing as a 45–60 minute window with specific slots, which sets clearer expectations. The 3-stage tracker (Requested → Scheduled → Completed) is visible immediately after booking, whereas Cars24's tracker only becomes relevant once the appointment is live.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FRICTION 4 -->
+    <div class="friction-item">
+      <div class="friction-num">04</div>
+      <div class="friction-body">
+        <h3 class="friction-title">Cancellation treated as exit, not signal</h3>
+        <div class="friction-prose">
+          <p>When a seller cancels on Cars24, they are shown four options: "I don't want to sell my car right now," "I've sold my car elsewhere," "I'm not available at the scheduled time," and "My reason is not listed." This is where Cars24 stops. No follow-up, no offer to help, no attempt to understand what went wrong.</p>
+
+          <p>Spinny's cancellation flow shows eight options, including "Getting better price somewhere else," "Offered price is not attractive," and "Inspector asked to cancel." Those last two are striking because they name failure modes that are Spinny's fault, not the seller's. More importantly, before the cancellation is confirmed, Spinny surfaces a modal asking "Need help with Evaluation?" with a "Get a Call Back" button. The seller who was about to leave gets an offer of a human conversation instead of a confirmation screen.</p>
+
+          <p>The difference is that Spinny treats cancellation as the start of a retention conversation. Cars24 treats it as data collection for a form that probably nobody reads. Eight honest cancellation reasons generate actionable signal. Four polite ones generate noise.</p>
+        </div>
+
+        <div class="pull">
+          "Inspector asked to cancel" and "Offered price is not attractive" are cancellation reasons Spinny lets sellers select. Letting them name the failure is both honest and smart. You cannot fix what you refuse to name.
+        </div>
+      </div>
+    </div>
+
+    <!-- FRICTION 5 -->
+    <div class="friction-item">
+      <div class="friction-num">05</div>
+      <div class="friction-body">
+        <h3 class="friction-title">The RC transfer black hole</h3>
+        <div class="friction-prose">
+          <p>Both platforms promise free RC (Registration Certificate) transfer after the sale. Both routinely take 60 to 180 days to complete it. In documented cases, the delay has cost sellers dearly: challans accumulating in their name from the new owner's driving, one Spinny seller's driver's licence impounded eight months after the sale when ₹50,000-plus in fines accrued, a Bengaluru woman summoned for a hit-and-run she had nothing to do with.<sup>[10]</sup></p>
+
+          <p>This is the post-sale moment that both platforms invest least in communicating. Cars24's Orbit product and its January 2026 acquisition of CarInfo (at ₹118 crore) signal a serious intent to fix this at the data layer — CarInfo brings 12 million monthly active users of vehicle data, with live lookups for registration, insurance, PUC, FASTag, and challan status.<sup>[5]</sup> But the seller-facing communication around RC status remains opaque on both platforms. The seller receives their money on day one and then has no reliable way to know whether they are still legally exposed months later.</p>
+
+          <p>This is not primarily a technology problem. The binding constraint is interstate RTO process variance. But the communication gap around it is entirely solvable, and neither company has solved it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SECTION 5: AI -->
+  <section class="section" id="section-ai">
+    <div class="section-label">05 — AI Strategy</div>
+    <h2 class="section-title">Where AI closes the gap</h2>
+
+    <div class="prose">
+      <p>Cars24 has the most publicly disclosed AI stack in Indian used cars by a considerable margin. It runs Profecto for price prediction, Profundus for computer vision during inspection, Autonaut as a RAG-based consumer chatbot that reached 36% adoption in pilot,<sup>[8]</sup> a self-hosted PaddleOCR pipeline for document extraction, and an ElevenLabs voice-agent deployment that now handles approximately 3 million minutes of outbound calls monthly with reported +35% conversion and −50% calling costs.<sup>[4]</sup> Spinny's public AI disclosure is almost nonexistent in comparison, with its Star Engine described generically as a "data-centric algorithm" trained on 500,000-plus transactions.</p>
+
+      <p>The gap that neither platform has closed is pre-inspection: using AI to align seller expectations with reality before the inspector ever arrives. That is where 57–60% of the sell funnel is lost. What follows is a specific intervention for each of the five friction points identified above.</p>
+    </div>
+
+    <div class="ai-block">
+      <div class="ai-eyebrow">Intervention 01 · Addresses Friction Points 1 and 2</div>
+      <div class="ai-name">Pre-inspection condition elicitor agent</div>
+      <div class="ai-desc">A conversational agent that runs between the price estimate and the inspection booking. It asks the seller about their car's actual condition: any dents, scratches, prior accidents, service history gaps. Each answer feeds back into the price range in real time with a one-line explanation. "Your declared front bumper scratch typically reduces value by ₹8,000–₹12,000 at inspection." The seller arrives at a tighter, more honest number. The inspector arrives with a pre-declared condition baseline. Price-shock cancellations fall. This is a LangGraph multi-step agent: one node per question category, memory across the session, a final price-adjustment summary as output. Cars24's Profecto already produces the SHAP values that explain feature weights. The missing piece is surfacing them to the seller in natural language.</div>
+      <div class="ai-connection">This is architecturally similar to the real-time claim assistant built at JindalX: a stateful conversational agent that gathers structured inputs and updates a downstream decision model, deployed at scale across hundreds of concurrent sessions.</div>
+    </div>
+
+    <div class="ai-block">
+      <div class="ai-eyebrow">Intervention 02 · Addresses Friction Point 2</div>
+      <div class="ai-name">Intent-aware journey routing</div>
+      <div class="ai-desc">Spinny's "When are you planning to sell?" question is the only moment on either platform where a seller's intent is explicitly captured. Cars24 treats every user identically after the price estimate: one CTA, one path, one urgency timer. A seller who selects "just checking price" should enter a 30-day nurture sequence with weekly market-movement alerts for their specific car, price trend notifications, and a low-friction re-entry path. A seller who selects "immediately" should receive a faster-than-default inspection slot and a pre-filled document upload prompt. Routing on stated intent requires no new infrastructure, only a branching architecture that Cars24's existing stack can handle today. The Clari sales-copilot work — where a 25% accuracy lift came from better signal classification upstream — is the same principle applied to a different funnel.</div>
+      <div class="ai-connection">Intent classification from a single question, routed into different downstream experiences, is straightforward LangGraph state management. The hard part is the content of each path, not the routing itself.</div>
+    </div>
+
+    <div class="ai-block">
+      <div class="ai-eyebrow">Intervention 03 · Addresses Friction Point 3</div>
+      <div class="ai-name">Seller-facing inspection live tracker</div>
+      <div class="ai-desc">The 30-minute pre-inspection anxiety window is structural: Cars24 assigns the inspector close to the slot to optimize routing. But the seller experience does not need to reflect that operational reality. An AI agent that sends a WhatsApp message 60 minutes before the slot with the inspector's name, photo, and real-time ETA (via the inspector's GPS, already used internally) eliminates the uncertainty without changing the operations. During the inspection itself, a live progress indicator ("Evaluating exterior — 12 of 30 checks complete") reduces the felt length of the 30–45 minute process and anchors the seller to the process rather than letting them disengage. Cars24 already has ElevenLabs voice infrastructure for outbound calls. A proactive pre-inspection call from an AI voice agent that confirms the appointment and sets expectations is a one-week integration, not a quarterly project.</div>
+      <div class="ai-connection">ElevenLabs agents are already live at Cars24 for post-booking follow-up.<sup>[4]</sup> Extending the same pipeline to pre-inspection confirmation is an orchestration change, not a new system.</div>
+    </div>
+
+    <div class="ai-block">
+      <div class="ai-eyebrow">Intervention 04 · Addresses Friction Point 4</div>
+      <div class="ai-name">Cancellation winback agent</div>
+      <div class="ai-desc">Spinny's "Get a Call Back" modal before cancellation is the right instinct deployed manually. An AI agent version of that interaction would do more: it reads the cancellation reason selected, references the specific car and the quote, and opens with a targeted response. "You mentioned the offered price wasn't attractive. Based on your car's Dark Edition trim and current Noida dealer demand, ₹9.1L is achievable through auction. Would you like to reschedule?" That is not a generic save attempt. It is a data-driven counter-offer that addresses the stated objection. Cars24 has the auction-demand data. Spinny has the fixed-offer model. The agent architecture is the same on both: read the cancellation signal, route to the appropriate save strategy, hand off to a human if the session continues for more than two exchanges.</div>
+      <div class="ai-connection">This mirrors the JindalX real-time claim assistant pattern: an agent that reads a live signal, retrieves relevant context, and delivers a decision-support response within the same session rather than in a follow-up call 24 hours later.</div>
+    </div>
+
+    <div class="ai-block">
+      <div class="ai-eyebrow">Intervention 05 · Addresses Friction Point 5</div>
+      <div class="ai-name">RC transfer intelligence layer</div>
+      <div class="ai-desc">Cars24's CarInfo acquisition gives it live access to VAHAN, hypothecation NOC status, challan lookups, and Form-35 filing status across all RTOs.<sup>[5]</sup> The missing piece is a seller-facing communication layer that surfaces this data proactively. A weekly status message to the seller ("RC transfer is pending at Lucknow RTO — current processing time in that office is 45 days, you are at day 22") is not technically complex. It requires connecting CarInfo data to a notification pipeline and writing the natural language status template. The Azure OpenAI pipeline built for eligibility processing at JindalX — 1,000-plus records daily at 99% accuracy, 60% reduction in manual effort — is directly analogous: structured data in, natural language status out, delivered at scale with no human in the loop per record.</div>
+      <div class="ai-connection">An OCR-first document verification step (RC, insurance) before the inspection, not after it, would additionally cut the document-related delays that currently extend the post-sale phase.</div>
+    </div>
+  </section>
+
+
+  <!-- SECTION 6: CONCLUSION -->
+  <section class="section" id="section-conclusion">
+    <div class="section-label">06 — Conclusion</div>
+    <h2 class="section-title">The real competition is for seller trust, not seller volume</h2>
+
+    <div class="prose">
+      <p>Cars24 and Spinny are not competitors in the way that two supermarkets are competitors. They are running structurally different experiments on the same human moment: the moment a person decides to hand over something they've owned and cared for, and trust that they will be treated fairly.</p>
+
+      <p>Cars24 wins on speed (plate auto-fetch in seconds, same-day inspection slots), on geographic reach (1,500-plus cities, 20,000-plus dealers), and on the depth of its AI stack. Spinny wins on price certainty (±5% guarantee is a credible commitment that Cars24's auction model cannot match), on post-booking cleanliness (no premature upsells, clean tracker), and on the honesty of its cancellation design.</p>
+
+      <p>The place where both companies lose is the same: between the online estimate and the inspection appointment. That 57–60% drop-off is the largest addressable pool of lost value in the entire sell journey. It is not a design problem. It is a trust problem. And trust problems in 2026 are AI problems, because the technology to explain a price, personalise a journey, predict a cancellation, and automate a follow-up has moved from research into production.</p>
+
+      <p>The five interventions above are not speculative. Each one builds on infrastructure that either Cars24 has already shipped or that is standard engineering for a team with LangGraph, Azure OpenAI, and ElevenLabs experience in production. The question is not whether the technology exists. It is whether the product team is organised around the right problem.</p>
+
+      <p>The right problem is not "how do we get more people to enter their plate number." It is "how do we make the person who entered their plate number trust us enough to show up when the inspector rings the doorbell."</p>
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- SOURCES -->
+  <section class="section" id="section-sources">
+    <div class="section-label">Sources</div>
+    <h2 class="section-title">References</h2>
+
+    <div class="sources-grid">
+      <div class="source-row">
+        <span class="source-num">[1]</span>
+        <div class="source-text"><strong>Entrackr, March 2026</strong> — "Cars24 reports 10% revenue decline in FY25; losses rise marginally." entrackr.com/fintrackr/cars24-reports-10-revenue-decline-in-fy25</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[2]</span>
+        <div class="source-text"><strong>Entrackr, February 2026</strong> — "Spinny posts Rs 4,657 Cr revenue in FY25; cuts losses by 28%." entrackr.com/fintrackr/spinny-posts-rs-4657-cr-revenue-in-fy25</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[3]</span>
+        <div class="source-text"><strong>Cars24 Data Science Blog (Medium)</strong> — "ML and Deep Learning into Used Car Pricing @ Cars24, Part 2." Discloses Profecto architecture: XGBoost, ~600 features, 50%/80% within ±5%/±10%, ~600ms p50 latency. medium.com/cars24-data-science-blog</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[4]</span>
+        <div class="source-text"><strong>ElevenLabs, 2025</strong> — "Cars24 uses ElevenLabs Agents to power India's largest voice-driven car retail operation." Claims: +35% conversion, +20% CSAT, −50% calling costs, 3M+ minutes of outbound calls monthly. elevenlabs.io/blog/cars24</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[5]</span>
+        <div class="source-text"><strong>YourStory, January 2026</strong> — "Cars24 acquires vehicle information platform CarInfo." ₹118 crore acquisition; CarInfo serves 12M monthly active users with VAHAN, insurance, challan, FASTag data. yourstory.com/2026/01/cars24-acquires-vehicle-information-platform-carinfo</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[6]</span>
+        <div class="source-text"><strong>Medium / Anshul (Cars24 product design), 2024</strong> — "Revamping the Ride: A Journey of Redesigning Car Selling Experience for Cars24." Cites 43% inspection booking conversion on direct channels; attributes 57% drop-off to price explainability gap and estimate-vs-final discrepancy. medium.com/@anshul672</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[7]</span>
+        <div class="source-text"><strong>JM Financial, August 2023</strong> — Acquisition note on CarTrade-OLX Autos deal. Discloses OLX Autos inspection-to-deal conversion of ~10%, buy-sell gross margin of 6.5%, net pre-PDT margin of −5.4%. OLX Autos C2B was shut by CarTrade two months later. Sourced via CliffsNotes document archive.</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[8]</span>
+        <div class="source-text"><strong>CRN India / AIM Group, December 2024</strong> — "Cars24 launches Autonaut: India's first AI chatbot for cars." Multilingual RAG-based chatbot; 36% adoption in pilot phase. crn.in; aimgroup.com/2024/12</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[9]</span>
+        <div class="source-text"><strong>Spinny, official pricing page</strong> — "How Pricing Works at Spinny." Describes ±5% guarantee on SellRight offers, 72-hour offer validity, and Star Engine methodology. spinny.com/how-it-works/pricing</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[10]</span>
+        <div class="source-text"><strong>TeamBHP community threads, 2022–2025</strong> — Multiple documented sell-side experiences on Spinny and Cars24 including cross-platform price comparisons (EcoSport AT: Spinny ₹8.75L vs Cars24 ₹8.1L), RC transfer delay cases, and inspector no-show reports. team-bhp.com</div>
+      </div>
+      <div class="source-row">
+        <span class="source-num">[11]</span>
+        <div class="source-text"><strong>First-hand observation, April 27, 2026</strong> — Full walkthrough of both apps using 2024 Tata Nexon (Creative Plus 1.5 Revotorq 6MT Dark Edition, Diesel, RTO UP-78, plate UP78 HS3132). Screenshots captured across 36 screens total: 16 on Cars24, 20 on Spinny.</div>
+      </div>
+    </div>
+  </section>
+
+  <div style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); font-size: 12px; color: var(--ink-faint); line-height: 1.6;">
+    Prepared for Cars24 pre-interview assignment · April 2026 · All first-hand observations conducted on live production apps.
+  </div>
+
+</main>
+
+</body>
+</html>
